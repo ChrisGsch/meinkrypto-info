@@ -1,0 +1,38 @@
+{
+  "updatedAt": "2026-07-29T15:44:59Z",
+  "currency": "USD",
+  "assets": [
+    {
+      "symbol": "BTC",
+      "name": "Bitcoin",
+      "price": 63962.69140625,
+      "change24h": 0.14298759,
+      "change365d": -45.75854303,
+      "volatility30d": 31.28681793
+    },
+    {
+      "symbol": "ETH",
+      "name": "Ethereum",
+      "price": 1891.94995117,
+      "change24h": -1.45829617,
+      "change365d": -50.1259397,
+      "volatility30d": 45.59948278
+    },
+    {
+      "symbol": "ADA",
+      "name": "Cardano",
+      "price": 0.1626,
+      "change24h": 0.62566085,
+      "change365d": -79.21959858,
+      "volatility30d": 73.44180226
+    },
+    {
+      "symbol": "LTC",
+      "name": "Litecoin",
+      "price": 44.99000168,
+      "change24h": -2.4808397,
+      "change365d": -58.54691674,
+      "volatility30d": 37.77638884
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "hinweis": "Diese Einordnungen werden redaktionell gepflegt und nicht automatisch von KI veröffentlicht.",
+  "items": [
+    {
+      "date": "24. Juli 2026",
+      "label": "Regulierung",
+      "title": "MiCA prägt den europäischen Krypto-Rahmen",
+      "copy": "Einheitliche EU-Regeln rücken Transparenz, Zulassung und Aufsicht von Krypto-Dienstleistungen stärker in den Mittelpunkt.",
+      "source": "ESMA",
+      "href": "https://www.esma.europa.eu/esmas-activities/digital-finance-and-innovation/markets-crypto-assets-regulation-mica"
+    },
+    {
+      "date": "23. Juli 2026",
+      "label": "Ethereum",
+      "title": "Der Ethereum-Fahrplan bleibt dicht getaktet",
+      "copy": "Nach den jüngsten Skalierungsschritten richtet sich der Blick auf Hegotá und weitere Verbesserungen an Effizienz und Resilienz.",
+      "source": "ethereum.org",
+      "href": "https://ethereum.org/roadmap/"
+    },
+    {
+      "date": "12. Juni 2026",
+      "label": "Cardano",
+      "title": "Governance und Interoperabilität im Fokus",
+      "copy": "Die Cardano Foundation berichtet über LayerZero-Integration, Governance-Werkzeuge und Vorbereitungen für das Van-Rossem-Upgrade.",
+      "source": "Cardano Foundation",
+      "href": "https://cardanofoundation.org/blog/june-2026-activities"
+    },
+    {
+      "date": "23. Juli 2026",
+      "label": "Banken & Litecoin",
+      "title": "Kryptohandel wandert in bestehende Banking-Apps",
+      "copy": "BancaStato integriert Bitcoin, Ethereum und Litecoin über Sygnum und Avaloq direkt in Web- und Mobile-Banking.",
+      "source": "Sygnum",
+      "href": "https://www.sygnum.com/news/bancastato-launches-regulatedcrypto-trading-with-sygnumand-avaloq/"
+    }
+  ]
+}
