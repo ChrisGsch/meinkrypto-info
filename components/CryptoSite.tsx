@@ -968,7 +968,7 @@ export default function CryptoSite() {
             <p className="eyebrow">Über mich</p>
             <h2>Wissenschaftlich fundiert. Verständlich vermittelt.</h2>
             <p>
-              Mein Name istChristoph Gschnaidtner und ich beschäftige mich seit 15 
+              Mein Name ist Christoph Gschnaidtner und ich beschäftige mich seit 15 
               Jahren mit Kryptowerten, Blockchain und Finanzmärkten. Seit
               2015 vermittle ich diese Themen auch als Dozent und Referent – mit
               besonderem Blick auf Banken, Finanzdienstleister und deren
