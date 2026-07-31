@@ -22,6 +22,26 @@ options(
   timeout = 180
 )
 
+if (utils::compareVersion(
+  as.character(utils::packageVersion("quantmod")),
+  "0.4.29"
+) < 0) {
+  stop(
+    "quantmod >= 0.4.29 is required. Run install.packages('quantmod') and restart R."
+  )
+}
+
+fred_api_key <- trimws(Sys.getenv("FRED_API_KEY", unset = ""))
+if (!nzchar(fred_api_key)) {
+  stop(
+    paste(
+      "FRED_API_KEY is missing.",
+      "Create a free FRED API key and store it in ~/.Renviron locally",
+      "and as the GitHub Actions repository secret FRED_API_KEY."
+    )
+  )
+}
+
 args <- commandArgs(trailingOnly = TRUE)
 project_root <- if (length(args) >= 1) normalizePath(args[[1]]) else getwd()
 chart_dir <- file.path(project_root, "public", "charts")
@@ -85,6 +105,7 @@ fetch_fred <- function(symbol, from = date_start, attempts = 3) {
           symbol,
           src = "FRED",
           from = from,
+          api.key = fred_api_key,
           auto.assign = TRUE,
           env = symbol_env,
           warnings = FALSE

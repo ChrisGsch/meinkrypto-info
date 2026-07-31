@@ -5,7 +5,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: "13 5,15 * * *"
+    - cron: "23 7,19 * * *"
       timezone: "Europe/Berlin"
   workflow_dispatch:
 
@@ -24,7 +24,7 @@ jobs:
 
     steps:
       - name: Repository laden
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: R einrichten
         uses: r-lib/actions/setup-r@v2
@@ -47,10 +47,12 @@ jobs:
       - name: Marktanalysen aktualisieren
         id: market_update
         continue-on-error: true
+        env:
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
         run: Rscript scripts/update_market_data.R "$GITHUB_WORKSPACE"
 
       - name: Node.js einrichten
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: npm
@@ -62,10 +64,10 @@ jobs:
         run: npm run build:pages
 
       - name: GitHub Pages konfigurieren
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
 
       - name: Website-Artefakt hochladen
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: dist-pages
 
@@ -84,4 +86,4 @@ jobs:
     steps:
       - name: Auf GitHub Pages veröffentlichen
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
