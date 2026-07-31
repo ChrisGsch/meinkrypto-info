@@ -720,7 +720,7 @@ export default function CryptoSite() {
             </div>
             <p>
               Trotz gemeinsamen Grundgedankes unterscheiden sich die vier Kryptowerte  
-              grundlegend hinsichtlich Technologie, Funktionsweise und Nutzens.
+              grundlegend hinsichtlich Technologie, Funktionsweise und Nutzen.
             </p>
           </div>
 
@@ -928,7 +928,7 @@ export default function CryptoSite() {
                 href="library/Website/2026_Übersicht_Kundenveranstaltungen_Krypto_Gschnaidtner.pdf"
                 download="2026_Übersicht_Kundenveranstaltungen_Krypto_Gschnaidtner.pdf"
               >
-                Veranstaltungsübersicht herunterladen
+                PDF herunterladen
                 <span aria-hidden="true">↓</span>
               </a>
             </div>
