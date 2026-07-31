@@ -633,9 +633,9 @@ export default function CryptoSite() {
               Krypto, <em>klarer</em> betrachtet.
             </h1>
             <p className="hero-copy">
-              Fundierte Einordnungen zu Bitcoin, Ethereum, Cardano und
-              Litecoin – verbunden mit Daten, Vergleichen und
-              Veranstaltungsformaten für Banken und ihre Kundinnen und Kunden.
+              Einordnungen zu Bitcoin, Ethereum, Cardano und
+              Litecoin – fundiert,datenbasiert und aktuell <br>
+              Veranstaltungsformate für Banken und ihre Kundinnen und Kunden - innovativ, zielgruppengerecht und praxisnah
             </p>
             <div className="hero-actions">
               <a className="button button-outline-gold" href="#markt">
