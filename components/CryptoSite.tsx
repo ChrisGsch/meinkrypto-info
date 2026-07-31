@@ -721,8 +721,8 @@ export default function CryptoSite() {
               <h2>Vier Kryptowerte. Vier unterschiedliche Profile.</h2>
             </div>
             <p>
-              Trotz gemeinsamen Grundgedankes unterscheiden sich die vier Kryptowerte  
-              grundlegend hinsichtlich Technologie, Funktionsweise und Nutzen.
+              Trotz gemeinsamer Technologie unterscheiden sich die vier Kryptowerte  
+              grundlegend hinsichtlich Funktionsweise, Anwendung und Nutzen.
             </p>
           </div>
 
