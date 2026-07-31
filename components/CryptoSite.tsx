@@ -650,7 +650,7 @@ export default function CryptoSite() {
             <div className="hero-proof">
               <div>
                 <strong>Vier</strong>
-                <span>Kryptowerte in meinKrypto</span>
+                <span>Kryptowerte von meinKrypto</span>
               </div>
               <div>
                 <strong>Täglich</strong>
