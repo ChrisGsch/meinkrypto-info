@@ -635,9 +635,9 @@ export default function CryptoSite() {
             <p className="hero-copy">
               Einordnungen zu Bitcoin, Ethereum, Cardano und
               Litecoin – <br />
-              fundiert, datenbasiert und aktuell <br />
+              <em>fundiert, datenbasiert und aktuell</em> <br />
               Veranstaltungsformate für Banken und ihre Kundinnen und Kunden – <br />
-              innovativ, zielgruppengerecht und praxisnah
+              <em>innovativ, zielgruppengerecht und praxisnah </em>
             </p>
             <div className="hero-actions">
               <a className="button button-outline-gold" href="#markt">
@@ -650,7 +650,7 @@ export default function CryptoSite() {
             <div className="hero-proof">
               <div>
                 <strong>Vier</strong>
-                <span>meinKrypto-Werte</span>
+                <span>Kryptowerte in meinKrypto</span>
               </div>
               <div>
                 <strong>Täglich</strong>
