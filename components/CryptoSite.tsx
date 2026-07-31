@@ -654,7 +654,7 @@ export default function CryptoSite() {
               </div>
               <div>
                 <strong>Täglich</strong>
-                <span>aktualisierte Analysen</span>
+                <span>mehrmals aktualisierte Analysen</span>
               </div>
               <div>
                 <strong>Seit 2015</strong>
