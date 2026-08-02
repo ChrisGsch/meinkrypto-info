@@ -6,6 +6,7 @@
 
 suppressPackageStartupMessages({
   library(quantmod)
+  library(fredr)
   library(ggplot2)
   library(dplyr)
   library(tidyr)
@@ -22,15 +23,6 @@ options(
   timeout = 180
 )
 
-if (utils::compareVersion(
-  as.character(utils::packageVersion("quantmod")),
-  "0.4.29"
-) < 0) {
-  stop(
-    "quantmod >= 0.4.29 is required. Run install.packages('quantmod') and restart R."
-  )
-}
-
 fred_api_key <- trimws(Sys.getenv("FRED_API_KEY", unset = ""))
 if (!nzchar(fred_api_key)) {
   stop(
@@ -41,6 +33,7 @@ if (!nzchar(fred_api_key)) {
     )
   )
 }
+fredr::fredr_set_key(fred_api_key)
 
 args <- commandArgs(trailingOnly = TRUE)
 project_root <- if (length(args) >= 1) normalizePath(args[[1]]) else getwd()
@@ -99,24 +92,15 @@ fetch_fred <- function(symbol, from = date_start, attempts = 3) {
   last_error <- NULL
   for (attempt in seq_len(attempts)) {
     result <- tryCatch({
-      symbol_env <- new.env(parent = emptyenv())
-      object_name <- suppressWarnings(
-        getSymbols(
-          symbol,
-          src = "FRED",
-          from = from,
-          api.key = fred_api_key,
-          auto.assign = TRUE,
-          env = symbol_env,
-          warnings = FALSE
-        )
-      )
-      raw <- get(object_name[[1]], envir = symbol_env)
-      data.frame(
-        day = as.Date(index(raw)),
-        value = as.numeric(raw[, 1]),
-        stringsAsFactors = FALSE
+      fredr::fredr(
+        series_id = symbol,
+        observation_start = as.Date(from),
+        observation_end = Sys.Date()
       ) |>
+        transmute(
+          day = as.Date(date),
+          value = as.numeric(value)
+        ) |>
         filter(!is.na(day), !is.na(value), day >= from) |>
         distinct(day, .keep_all = TRUE) |>
         arrange(day)
