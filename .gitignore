@@ -41,3 +41,7 @@ next-env.d.ts
 /.sites-runtime/
 /outputs/
 /work/
+
+# Generated last-known-good market cache (persisted by GitHub Actions)
+/data/market-cache/*
+!/data/market-cache/.gitkeep

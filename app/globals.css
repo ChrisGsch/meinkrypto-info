@@ -777,6 +777,17 @@ img {
   font-size: 0.68rem;
 }
 
+.data-status-warning {
+  margin: 14px 0 0;
+  padding: 12px 14px;
+  border: 1px solid rgba(201, 150, 46, 0.38);
+  border-radius: 10px;
+  background: rgba(201, 150, 46, 0.08);
+  color: var(--navy-900);
+  font-size: 0.7rem;
+  line-height: 1.55;
+}
+
 .analysis-section {
   position: relative;
   padding-inline: clamp(24px, 4vw, 72px);

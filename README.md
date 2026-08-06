@@ -1,8 +1,12 @@
 # meinKrypto.info
 
 Responsive Informations- und Veranstaltungswebsite zu Bitcoin, Ethereum,
-Cardano und Litecoin. Dieses Übergabepaket ist für den statischen Betrieb über
-GitHub Pages und die Domain `meinkrypto.info` vorbereitet.
+Cardano und Litecoin. Das Projekt enthält zwei technisch gleichwertige
+Ausgabewege:
+
+- die Next-/Vinext-Website für den bereitgestellten Hosting-Stand
+- einen statischen Vite-Build für GitHub Pages und die Domain
+  `meinkrypto.info`
 
 ## Inhalte
 
@@ -21,8 +25,7 @@ npm ci
 npm run dev
 ```
 
-Der veröffentlichungsfertige GitHub-Pages-Build wird mit folgendem Befehl
-erzeugt:
+Der statische GitHub-Pages-Build wird mit folgendem Befehl erzeugt:
 
 ```bash
 npm run build:pages
@@ -32,7 +35,8 @@ Die fertigen Dateien liegen danach unter `dist-pages/`.
 
 ## Tägliche Datenaktualisierung
 
-`scripts/update_market_data.R` lädt Marktdaten über Yahoo Finance und erzeugt:
+`scripts/update_market_data.R` lädt Marktdaten über Yahoo Finance sowie
+Makrodaten mit `fredr::fredr()` und erzeugt:
 
 - `public/data/market.json`
 - kompakte 365-Tage-Kursverläufe für die Marktübersicht
@@ -44,11 +48,23 @@ Die fertigen Dateien liegen danach unter `dist-pages/`.
   y-Achsen
 
 Der Workflow `.github/workflows/deploy-pages.yml` führt diese Aktualisierung
-jeden Tag um 07:23 Uhr und 19:23 Uhr deutscher Zeit aus und veröffentlicht den
-neuen Stand anschließend auf GitHub Pages. Die Zeitzone `Europe/Berlin`
-berücksichtigt Sommer- und Winterzeit automatisch. Wenn ein Datenanbieter
-vorübergehend nicht erreichbar ist, wird der zuletzt im Repository vorhandene
-Datenstand weiter ausgeliefert.
+jeden Tag stündlich von 05:02 Uhr bis einschließlich 22:02 Uhr deutscher Zeit
+aus und veröffentlicht den neuen Stand anschließend auf GitHub Pages. Die
+Zeitzone `Europe/Berlin` berücksichtigt Sommer- und Winterzeit automatisch.
+
+Jede der 21 Datenreihen wird unabhängig abgerufen, geprüft und in einer eigenen
+Last-known-good-Datei unter `data/market-cache/` gespeichert. Schlägt nur eine
+Reihe fehl, werden die übrigen Reihen trotzdem aktualisiert. Für die fehlende
+Reihe wird nach drei Abrufversuchen der letzte validierte Cache verwendet. Neue
+Dateien ersetzen den bestehenden Stand erst nach erfolgreicher Validierung und
+werden mit einer Sicherungsdatei geschrieben. GitHub Actions stellt den Cache
+beim nächsten Lauf wieder her.
+
+Der technische Datenstatus steht in `public/data/update-status.json`; ein
+ausführliches Laufprotokoll wird als GitHub-Actions-Artefakt bereitgestellt.
+Eine sichtbare Meldung auf der Website erscheint erst, wenn Daten kritisch alt
+sind oder eine Darstellung nicht sicher neu erzeugt werden konnte. Details
+stehen in [DATEN-FALLBACK.md](DATEN-FALLBACK.md).
 
 ## Aktuelle Einordnungen pflegen
 

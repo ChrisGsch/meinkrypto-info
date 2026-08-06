@@ -48,11 +48,32 @@ prüfen und anschließend committen und pushen.
 6. Nach erfolgreichem Lauf erscheint zunächst eine Adresse nach dem Muster
    `https://GITHUB-NAME.github.io/meinkrypto-info/`.
 
+### FRED-Schlüssel für Makrodaten hinterlegen
+
+Für Inflation und Leitzinsen wird das R-Paket `fredr` eingesetzt. Dafür ist ein
+kostenloser FRED-API-Schlüssel erforderlich:
+
+1. Unter <https://fred.stlouisfed.org/docs/api/api_key.html> einen Schlüssel
+   erstellen.
+2. Im GitHub-Repository **Settings > Secrets and variables > Actions** öffnen.
+3. **New repository secret** auswählen.
+4. Name `FRED_API_KEY` und als Wert den persönlichen Schlüssel eintragen.
+
+Der Schlüssel gehört nicht in den R-Code, nicht in eine Datei und nicht in
+einen Commit. Fehlt er vorübergehend, laufen die Yahoo-Reihen trotzdem weiter;
+die FRED-Reihen verwenden ihren letzten gültigen Cache.
+
 Der Workflow baut die statische Website bei jedem Push neu. Zusätzlich läuft er
-jeden Tag um **07:23 Uhr und 19:23 Uhr deutscher Zeit**. Die im Workflow
-hinterlegte Zeitzone `Europe/Berlin` stellt automatisch auf Sommer- und
-Winterzeit um. Dabei werden Kurse, Renditen, Korrelationen,
+jeden Tag **stündlich von 05:02 Uhr bis einschließlich 22:02 Uhr deutscher
+Zeit**. Die im Workflow hinterlegte Zeitzone `Europe/Berlin` stellt automatisch
+auf Sommer- und Winterzeit um. Dabei werden Kurse, Renditen, Korrelationen,
 Bitcoin-/Gold-Vergleiche, Volatilitäten und Makrografiken aktualisiert.
+
+Beim ersten vollständig erfolgreichen Lauf wird unter GitHub Actions ein
+Last-known-good-Cache aufgebaut. Danach kann jede Datenreihe unabhängig auf den
+letzten validierten Stand zurückfallen. Der Cache wird zwischen den Läufen über
+GitHub Actions wiederhergestellt; er enthält ausschließlich öffentliche
+Markt- und Makrodaten, keine Zugangsschlüssel.
 
 GitHub kann zeitgesteuerte Läufe bei hoher Auslastung um einige Minuten
 verzögern. Der Computer muss dafür nicht eingeschaltet sein und RStudio muss
@@ -126,7 +147,8 @@ git push
 ```
 
 Jeder Push löst automatisch einen neuen Build aus. Die tägliche
-Datenaktualisierung läuft unabhängig davon morgens und abends weiter.
+Datenaktualisierung läuft unabhängig davon zwischen 05:02 Uhr und 22:02 Uhr
+stündlich weiter.
 
 ### Aktuelle Einordnungen ändern
 
@@ -152,13 +174,13 @@ Die Zeiten stehen in `.github/workflows/deploy-pages.yml`:
 
 ```yaml
 schedule:
-  - cron: "23 7,19 * * *"
+  - cron: "02 5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22 * * *"
     timezone: "Europe/Berlin"
 ```
 
-`23` steht für die Minute, `7,19` für 07 und 19 Uhr. Werden beispielsweise
-08:15 Uhr und 20:15 Uhr gewünscht, lautet die Cron-Zeile
-`"15 8,20 * * *"`.
+`02` steht für die Minute; die folgende Liste enthält die Stunden von 05 bis
+22 Uhr. Werden beispielsweise nur 08:15 Uhr und 20:15 Uhr gewünscht, lautet
+die Cron-Zeile `"15 8,20 * * *"`.
 
 ## Typische Fehler
 
@@ -171,8 +193,12 @@ schedule:
 ### Diagramme wurden an einem Tag nicht aktualisiert
 
 - Im Repository unter **Actions** den letzten Workflow öffnen.
-- Der Workflow veröffentlicht bewusst den letzten gültigen Datenstand weiter,
-  wenn Yahoo Finance vorübergehend nicht erreichbar ist.
+- Im Schritt **Marktanalysen aktualisieren** steht für jede Reihe `updated`,
+  `cache` oder `unavailable`.
+- Der Workflow aktualisiert erreichbare Reihen weiter und verwendet für
+  ausgefallene Reihen den letzten validierten Datenstand.
+- Unter **Artifacts** kann das Protokoll `market-update-report-...`
+  heruntergeladen werden.
 - Über **Run workflow** kann später ein neuer Versuch gestartet werden.
 
 ### Website funktioniert unter der GitHub-Adresse, aber nicht unter der Domain

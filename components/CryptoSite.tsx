@@ -15,8 +15,16 @@ type MarketAsset = {
 
 type MarketData = {
   updatedAt: string;
+  generatedAt?: string;
   currency: string;
   assets: MarketAsset[];
+};
+
+type DataUpdateStatus = {
+  generatedAt: string;
+  overallStatus: "current" | "fallback" | "degraded";
+  displayWarning: boolean;
+  message: string | null;
 };
 
 type Insight = {
@@ -92,12 +100,19 @@ const fallbackMarket: MarketData = {
   ],
 };
 
+const fallbackUpdateStatus: DataUpdateStatus = {
+  generatedAt: fallbackMarket.updatedAt,
+  overallStatus: "current",
+  displayWarning: false,
+  message: null,
+};
+
 const assetProfiles = [
   {
     symbol: "BTC",
     name: "Bitcoin",
     type: "Digitaler Wertspeicher",
-    copy: "Dezentrales Transaktionsnetzwerk mit einem festen maximalen Angebot von 21 Millionen Bitcoin.",
+    copy: "Knappes, dezentrales Netzwerk mit einem festen maximalen Angebot von 21 Millionen Bitcoin.",
   },
   {
     symbol: "ETH",
@@ -507,6 +522,9 @@ const formatDate = (value: string) => {
 
 export default function CryptoSite() {
   const [market, setMarket] = useState<MarketData>(fallbackMarket);
+  const [updateStatus, setUpdateStatus] = useState<DataUpdateStatus>(
+    fallbackUpdateStatus,
+  );
   const [insights, setInsights] = useState<Insight[]>(fallbackInsights);
   const [activeChartTab, setActiveChartTab] = useState("entwicklung");
   const [lightbox, setLightbox] = useState<Chart | null>(null);
@@ -526,6 +544,19 @@ export default function CryptoSite() {
       .catch(() => {
         // The checked-in fallback keeps the page useful if a data provider is
         // temporarily unavailable during the scheduled update.
+      });
+
+    fetch("data/update-status.json", { cache: "no-store" })
+      .then((response) => {
+        if (!response.ok) throw new Error("update status unavailable");
+        return response.json() as Promise<DataUpdateStatus>;
+      })
+      .then((data) => {
+        if (active && data.generatedAt) setUpdateStatus(data);
+      })
+      .catch(() => {
+        // No warning is shown unless a validated status file explicitly asks
+        // for one. The checked-in market data remains available either way.
       });
 
     fetch("data/insights.json", { cache: "no-store" })
@@ -560,7 +591,9 @@ export default function CryptoSite() {
 
   const closeMenu = () => setMenuOpen(false);
   const activeChartRows = chartGroups[activeChartTab];
-  const chartVersion = market.updatedAt.slice(0, 10);
+  const chartVersion = encodeURIComponent(
+    updateStatus.generatedAt || market.updatedAt,
+  );
   const chartSource = (src: string) => `${src}?v=${chartVersion}`;
 
   return (
@@ -633,11 +666,9 @@ export default function CryptoSite() {
               Krypto, <em>klarer</em> betrachtet.
             </h1>
             <p className="hero-copy">
-              Einordnungen zu Bitcoin, Ethereum, Cardano und
-              Litecoin – <br />
-              <em>fundiert, datenbasiert und aktuell</em> <br />
-              Veranstaltungsformate für Banken und ihre Kundinnen und Kunden – <br />
-              <em>innovativ, zielgruppengerecht und praxisnah </em>
+              Fundierte Einordnungen zu Bitcoin, Ethereum, Cardano und
+              Litecoin – verbunden mit Daten, Vergleichen und
+              Veranstaltungsformaten für Banken und ihre Kundinnen und Kunden.
             </p>
             <div className="hero-actions">
               <a className="button button-outline-gold" href="#markt">
@@ -649,16 +680,16 @@ export default function CryptoSite() {
             </div>
             <div className="hero-proof">
               <div>
-                <strong>Vier</strong>
-                <span>Kryptowerte von meinKrypto</span>
+                <strong>4</strong>
+                <span>meinKrypto-Werte</span>
               </div>
               <div>
                 <strong>Täglich</strong>
-                <span>mehrmals aktualisierte Analysen</span>
+                <span>aktualisierte Analysen</span>
               </div>
               <div>
                 <strong>Seit 2015</strong>
-                <span>Vorträge zu Krypto & Blockchain</span>
+                <span>Referent für Krypto & Blockchain</span>
               </div>
             </div>
           </div>
@@ -721,8 +752,8 @@ export default function CryptoSite() {
               <h2>Vier Kryptowerte. Vier unterschiedliche Profile.</h2>
             </div>
             <p>
-              Trotz gemeinsamer Technologie unterscheiden sich die vier Kryptowerte  
-              grundlegend hinsichtlich Funktionsweise, Anwendung und Nutzen.
+              Ein gemeinsames Marktsegment bedeutet nicht, dass Technologie,
+              Nutzen und Risikotreiber identisch sind.
             </p>
           </div>
 
@@ -796,6 +827,11 @@ export default function CryptoSite() {
             Kurse in USD. Verzögerte Schlusskursdaten; keine Echtzeitkurse und
             keine Anlageberatung.
           </p>
+          {updateStatus.displayWarning && updateStatus.message && (
+            <p className="data-status-warning" role="status">
+              {updateStatus.message}
+            </p>
+          )}
         </section>
 
         <section className="section analysis-section" id="analysen">
@@ -805,8 +841,8 @@ export default function CryptoSite() {
               <h2>Zusammenhänge statt Momentaufnahmen.</h2>
             </div>
             <p>
-              Die Auswertungen werden auf Basis aktueller Marktdaten täglich neu berechnet 
-              und umgehend veröffentlicht.
+              Die Auswertungen werden automatisch aus Marktdaten neu berechnet
+              und täglich veröffentlicht.
             </p>
           </div>
 
@@ -889,7 +925,7 @@ export default function CryptoSite() {
               <h2>Was den Kryptomarkt gerade bewegt.</h2>
             </div>
             <p>
-              Kuratierte Entwicklungen aus den Bereichen Regulierung, Technologie und
+              Kuratierte Entwicklungen aus Regulierung, Technologie und
               Bankeninfrastruktur – kompakt und quellenbasiert.
             </p>
           </div>
@@ -922,15 +958,16 @@ export default function CryptoSite() {
             </div>
             <div>
               <p>
-                Passende Formate für Mitglieder, Kundinnen und Kunden, 
-                Private Banking, Firmenkunden, Jugendmarkt und Mitarbeitende.
+                Passende Formate für Kundinnen und Kunden, Mitglieder,
+                Mitarbeitende, Private Banking, Firmenkunden und den
+                Jugendmarkt.
               </p>
               <a
                 className="button button-primary event-download-button"
                 href="library/Website/2026_Übersicht_Kundenveranstaltungen_Krypto_Gschnaidtner.pdf"
                 download="2026_Übersicht_Kundenveranstaltungen_Krypto_Gschnaidtner.pdf"
               >
-                PDF herunterladen
+                Veranstaltungsübersicht als PDF
                 <span aria-hidden="true">↓</span>
               </a>
             </div>
@@ -970,9 +1007,9 @@ export default function CryptoSite() {
             <p className="eyebrow">Über mich</p>
             <h2>Wissenschaftlich fundiert. Verständlich vermittelt.</h2>
             <p>
-              Mein Name ist Christoph Gschnaidtner und ich beschäftige mich seit 15 
-              Jahren mit Kryptowerten, Blockchain und Finanzmärkten. Seit
-              2015 vermittle ich diese Themen auch als Dozent und Referent – mit
+              Ich bin Christoph Gschnaidtner und beschäftige mich seit mehr als
+              zehn Jahren mit Kryptowerten, Blockchain und Finanzmärkten. Seit
+              2015 vermittle ich diese Themen als Dozent und Referent – mit
               besonderem Blick auf Banken, Finanzdienstleister und deren
               Kundinnen und Kunden.
             </p>
@@ -1006,13 +1043,13 @@ export default function CryptoSite() {
                 className="button button-primary"
                 href="mailto:meinKrypto@christoph-gschnaidtner.de?subject=Anfrage%20über%20meinKrypto.info"
               >
-                Kontakt <span aria-hidden="true">↗</span>
+                E-Mail schreiben <span aria-hidden="true">↗</span>
               </a>
               <a
                 className="contact-detail"
                 href="mailto:meinKrypto@christoph-gschnaidtner.de"
               >
-                E-Mail: meinKrypto@christoph-gschnaidtner.de
+                meinKrypto@christoph-gschnaidtner.de
               </a>
             </div>
           </div>

@@ -24,7 +24,19 @@ jobs:
 
     steps:
       - name: Repository laden
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
+
+      - name: Letzten gültigen Daten-Cache laden
+        id: market_cache_restore
+        uses: actions/cache/restore@v6
+        with:
+          path: data/market-cache
+          key: market-data-v1-${{ runner.os }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            market-data-v1-${{ runner.os }}-
+
+      - name: Neues Laufprotokoll vorbereiten
+        run: rm -f data/market-cache/latest-run.json
 
       - name: R einrichten
         uses: r-lib/actions/setup-r@v2
@@ -52,8 +64,24 @@ jobs:
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
         run: Rscript scripts/update_market_data.R "$GITHUB_WORKSPACE"
 
+      - name: Gültigen Daten-Cache für den nächsten Lauf speichern
+        if: ${{ always() && hashFiles('data/market-cache/*.csv') != '' }}
+        uses: actions/cache/save@v6
+        with:
+          path: data/market-cache
+          key: market-data-v1-${{ runner.os }}-${{ github.run_id }}-${{ github.run_attempt }}
+
+      - name: Datenprotokoll bereitstellen
+        if: ${{ always() && hashFiles('data/market-cache/latest-run.json') != '' }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: market-update-report-${{ github.run_number }}-${{ github.run_attempt }}
+          path: data/market-cache/latest-run.json
+          retention-days: 30
+          if-no-files-found: ignore
+
       - name: Node.js einrichten
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
@@ -75,7 +103,7 @@ jobs:
       - name: Hinweis bei fehlgeschlagener Datenaktualisierung
         if: steps.market_update.outcome == 'failure'
         run: |
-          echo "::warning::Der Datenanbieter war nicht erreichbar. Die Website wird mit dem letzten vorhandenen Datenstand veröffentlicht."
+          echo "::warning::Die Datenaktualisierung ist unerwartet abgebrochen. Die Website wird mit den zuletzt erfolgreich erzeugten Dateien veröffentlicht."
 
   deploy:
     environment:

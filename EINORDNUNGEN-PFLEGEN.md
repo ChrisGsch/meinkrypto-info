@@ -50,8 +50,8 @@ Automatisch aktualisiert werden:
 - Vergleichsgrafiken
 - Makrografiken und Korrelationsmatrizen
 
-Der GitHub-Workflow führt den R-Code täglich um 07:23 Uhr und 19:23 Uhr
-deutscher Zeit aus.
+Der GitHub-Workflow führt den R-Code täglich stündlich von 05:02 Uhr bis
+einschließlich 22:02 Uhr deutscher Zeit aus.
 
 ## Sinnvoller KI-Einsatz
 
