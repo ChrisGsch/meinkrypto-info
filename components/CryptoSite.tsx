@@ -693,7 +693,6 @@ export default function CryptoSite() {
                 <strong>Seit 2015</strong>
                 <span>Vorträge zu Krypto & Blockchain</span>
               </div>
-              </div>
             </div>
           </div>
 
@@ -961,8 +960,8 @@ export default function CryptoSite() {
             </div>
             <div>
               <p>
-                Passende Formate für Mitglieder, für Kundinnen und Kunden -- <z className="B"></z> 
-                Private Banking, Firmenkunden, Jugendmarkt -- sowie für Mitarbeitende.
+                Passende Formate für Mitglieder, für Kundinnen und Kunden – 
+                Private Banking, Firmenkunden, Jugendmarkt – sowie für Mitarbeitende.
               </p>
               <a
                 className="button button-primary event-download-button"
