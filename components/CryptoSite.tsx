@@ -112,7 +112,7 @@ const assetProfiles = [
     symbol: "BTC",
     name: "Bitcoin",
     type: "Digitaler Wertspeicher",
-    copy: "Knappes, dezentrales Netzwerk mit einem festen maximalen Angebot von 21 Millionen Bitcoin.",
+    copy: "Dezentrales Transaktionsnetzwerk mit einem festen maximalen Angebot von 21 Millionen Bitcoin.",
   },
   {
     symbol: "ETH",
@@ -666,9 +666,11 @@ export default function CryptoSite() {
               Krypto, <em>klarer</em> betrachtet.
             </h1>
             <p className="hero-copy">
-              Fundierte Einordnungen zu Bitcoin, Ethereum, Cardano und
-              Litecoin – verbunden mit Daten, Vergleichen und
-              Veranstaltungsformaten für Banken und ihre Kundinnen und Kunden.
+              Einordnungen zu Bitcoin, Ethereum, Cardano und
+              Litecoin – <br />
+              <em>fundiert, datenbasiert und aktuell</em> <br />
+              Veranstaltungsformate für Banken und ihre Kundinnen und Kunden – <br />
+              <em>innovativ, zielgruppengerecht und praxisnah </em>
             </p>
             <div className="hero-actions">
               <a className="button button-outline-gold" href="#markt">
@@ -680,16 +682,17 @@ export default function CryptoSite() {
             </div>
             <div className="hero-proof">
               <div>
-                <strong>4</strong>
-                <span>meinKrypto-Werte</span>
+                <strong>Vier</strong>
+                <span>Kryptowerte von meinKrypto</span>
               </div>
               <div>
                 <strong>Täglich</strong>
-                <span>aktualisierte Analysen</span>
+                <span>mehrmals aktualisierte Analysen</span>
               </div>
               <div>
                 <strong>Seit 2015</strong>
-                <span>Referent für Krypto & Blockchain</span>
+                <span>Vorträge zu Krypto & Blockchain</span>
+              </div>
               </div>
             </div>
           </div>
@@ -752,8 +755,8 @@ export default function CryptoSite() {
               <h2>Vier Kryptowerte. Vier unterschiedliche Profile.</h2>
             </div>
             <p>
-              Ein gemeinsames Marktsegment bedeutet nicht, dass Technologie,
-              Nutzen und Risikotreiber identisch sind.
+              Trotz gemeinsamer Technologie unterscheiden sich die vier Kryptowerte  
+              grundlegend hinsichtlich Funktionsweise, Anwendung und Nutzen.
             </p>
           </div>
 
@@ -841,8 +844,8 @@ export default function CryptoSite() {
               <h2>Zusammenhänge statt Momentaufnahmen.</h2>
             </div>
             <p>
-              Die Auswertungen werden automatisch aus Marktdaten neu berechnet
-              und täglich veröffentlicht.
+              Die Auswertungen werden auf Basis aktueller Marktdaten mehrmals täglich neu berechnet 
+              und veröffentlicht.
             </p>
           </div>
 
@@ -925,7 +928,7 @@ export default function CryptoSite() {
               <h2>Was den Kryptomarkt gerade bewegt.</h2>
             </div>
             <p>
-              Kuratierte Entwicklungen aus Regulierung, Technologie und
+              Kuratierte Entwicklungen aus den Bereichen Regulierung, Technologie und
               Bankeninfrastruktur – kompakt und quellenbasiert.
             </p>
           </div>
@@ -958,16 +961,15 @@ export default function CryptoSite() {
             </div>
             <div>
               <p>
-                Passende Formate für Kundinnen und Kunden, Mitglieder,
-                Mitarbeitende, Private Banking, Firmenkunden und den
-                Jugendmarkt.
+                Passende Formate für Mitglieder, für Kundinnen und Kunden -- <z className="B"></z> 
+                Private Banking, Firmenkunden, Jugendmarkt -- sowie für Mitarbeitende.
               </p>
               <a
                 className="button button-primary event-download-button"
                 href="library/Website/2026_Übersicht_Kundenveranstaltungen_Krypto_Gschnaidtner.pdf"
                 download="2026_Übersicht_Kundenveranstaltungen_Krypto_Gschnaidtner.pdf"
               >
-                Veranstaltungsübersicht als PDF
+                Veranstaltungsübersicht als PDF herunterladen
                 <span aria-hidden="true">↓</span>
               </a>
             </div>
@@ -1007,9 +1009,9 @@ export default function CryptoSite() {
             <p className="eyebrow">Über mich</p>
             <h2>Wissenschaftlich fundiert. Verständlich vermittelt.</h2>
             <p>
-              Ich bin Christoph Gschnaidtner und beschäftige mich seit mehr als
-              zehn Jahren mit Kryptowerten, Blockchain und Finanzmärkten. Seit
-              2015 vermittle ich diese Themen als Dozent und Referent – mit
+              Mein Name ist Christoph Gschnaidtner und ich beschäftige mich seit 15 
+              Jahren mit Kryptowerten, Blockchain und Finanzmärkten. Seit
+              2015 vermittle ich diese Themen auch als Dozent und Referent – mit
               besonderem Blick auf Banken, Finanzdienstleister und deren
               Kundinnen und Kunden.
             </p>
@@ -1043,13 +1045,13 @@ export default function CryptoSite() {
                 className="button button-primary"
                 href="mailto:meinKrypto@christoph-gschnaidtner.de?subject=Anfrage%20über%20meinKrypto.info"
               >
-                E-Mail schreiben <span aria-hidden="true">↗</span>
+                Kontakt <span aria-hidden="true">↗</span>
               </a>
               <a
                 className="contact-detail"
                 href="mailto:meinKrypto@christoph-gschnaidtner.de"
               >
-                meinKrypto@christoph-gschnaidtner.de
+                E-Mail: meinKrypto@christoph-gschnaidtner.de
               </a>
             </div>
           </div>
